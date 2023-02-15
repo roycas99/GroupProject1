@@ -6,7 +6,7 @@ this project is about small co-op  store works by having for an application with
 1b.Remove a membe - system needs member id.
 1c.rerieve member info
 
-2a. ad Products
+2a. add Products
 2b. retrieve product info
 
 
