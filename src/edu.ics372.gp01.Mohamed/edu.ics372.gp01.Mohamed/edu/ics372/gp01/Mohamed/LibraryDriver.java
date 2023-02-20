@@ -18,10 +18,13 @@ public class LibraryDriver {
 		// Instantiating Singleton class
 		ProductList productList = ProductList.instance();
 		productList.addEntity(product1);
+		productList.addEntity(product2);
+		productList.addEntity(product1);
+		// productList.addEntity(product1);
 
 		// display product objects
 
-		System.out.println(product1.toString());
+		productList.retrieve();
 
 	}
 

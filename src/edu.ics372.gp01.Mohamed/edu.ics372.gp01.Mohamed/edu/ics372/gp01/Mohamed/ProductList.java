@@ -1,12 +1,19 @@
 package edu.ics372.gp01.Mohamed;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+
 /*
  * Made class abstract because dont know 
  * full implementation;
  * this class will extended EntityList by Vang
  * */
 
-public class ProductList extends EntityList1 {
+public class ProductList implements Iterator<Product> {
 	// id of the list needed maybe
+
+	//
+	private ArrayList<Product> productListArray = new ArrayList<>();
 
 	/* Singleton Design begin */
 	private static ProductList productListSingleton;
@@ -35,20 +42,48 @@ public class ProductList extends EntityList1 {
 		/*
 		 * add product only if the id and name not existed in the productList
 		 */
+		if (productListArray.contains(product.getProductId())) {
+			System.out.println(" the product is already in the list");
+		}
 
+		else if (productListArray.contains(product.getProductName())) {
+
+			System.out.println("choose another name for product");
+		}
+
+		else {
+			productListArray.add(product);
+		}
 	}
 
-	@Override
 	// remove the product from the ProductList
-	public void remove() {
-		// TODO Auto-generated method stub
+//	public void remove(Product product) {
+//		if (entityList.contains(product.getProductId())) {
+//			entityList.remove(product);
+//		}
+//
+//		else {
+//			System.out.println("product not existed");
+//		}
+//
+//	}
 
+	Iterator<Product> iteratorList = productListArray.iterator();
+
+	public void retrieve() {
+		System.out.println(productListArray.size());
 	}
 
 	@Override
-	public String retrieve() {
+	public boolean hasNext() {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
+	}
+
+	@Override
+	public Product next() {
+		// TODO Auto-generated method stub
+		return next();
 	}
 
 }
