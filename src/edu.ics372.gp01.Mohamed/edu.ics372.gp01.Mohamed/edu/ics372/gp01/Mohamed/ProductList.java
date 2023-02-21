@@ -10,7 +10,8 @@ import java.util.Iterator;
  * */
 
 public class ProductList implements Iterator<Product> {
-	// id of the list needed maybe
+    
+// id of the list needed maybe
 
 	//
 	private ArrayList<Product> productListArray = new ArrayList<>();
@@ -37,16 +38,19 @@ public class ProductList implements Iterator<Product> {
 	 * 
 	 * @param Product Type
 	 */
-	public void addEntity(Product product) {
+	public void addProduct(Product product) {
+        // getting id and name of product 
+        int productIdLocal = product.getProductId();
+        String productNameLocal = product.getProductName();
 
 		/*
 		 * add product only if the id and name not existed in the productList
 		 */
-		if (productListArray.contains(product.getProductId())) {
+		if (productListArray.contains(productIdLocal)) {
 			System.out.println(" the product is already in the list");
 		}
 
-		else if (productListArray.contains(product.getProductName())) {
+		else if (productListArray.contains(productNameLocal)) {
 
 			System.out.println("choose another name for product");
 		}
@@ -68,22 +72,28 @@ public class ProductList implements Iterator<Product> {
 //
 //	}
 
-	Iterator<Product> iteratorList = productListArray.iterator();
+	
 
 	public void retrieve() {
-		System.out.println(productListArray.size());
+        Iterator<Product> iteratorList = productListArray.iterator();
+        while(iteratorList.hasNext()){
+		System.out.println(iteratorList.next());
+        }
+        
 	}
 
-	@Override
-	public boolean hasNext() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    @Override
+    public boolean hasNext() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'hasNext'");
+    }
 
-	@Override
-	public Product next() {
-		// TODO Auto-generated method stub
-		return next();
-	}
+    @Override
+    public Product next() {
+        // TODO Auto-generated method stub
+        return next();
+    }
+
+	
 
 }
