@@ -39,27 +39,27 @@ public class ProductList implements Iterator<Product> {
 	 * @param Product Type
 	 */
 	public void addProduct(Product product) {
-        // getting id and name of product 
-        int productIdLocal = product.getProductId();
-        String productNameLocal = product.getProductName();
-
+       
 		/*
 		 * add product only if the id and name not existed in the productList
 		 */
-		if (productListArray.contains(productIdLocal)) {
-			System.out.println(" the product is already in the list");
-		}
 
-		else if (productListArray.contains(productNameLocal)) {
+   for (Product product1 : productListArray){
+    if (product1.getProductId() == product.getProductId()) {
+        System.out.println(" the product is already in the list");
+    }
+    else if (product1.getProductName().equals(product.getProductName())) {
 
-			System.out.println("choose another name for product");
-		}
+        System.out.println("choose another name for product");
+    }
+    else {
+        productListArray.add(product);
+    }
 
-		else {
-			productListArray.add(product);
-		}
-	}
+   }
 
+} // end of addProductMethod
+	
 	// remove the product from the ProductList
 //	public void remove(Product product) {
 //		if (entityList.contains(product.getProductId())) {
