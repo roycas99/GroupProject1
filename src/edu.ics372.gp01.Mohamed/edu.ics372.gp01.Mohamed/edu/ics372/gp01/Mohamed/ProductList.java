@@ -10,7 +10,7 @@ import java.util.Iterator;
  * */
 
 public class ProductList implements Iterator<Product> {
-    
+
 // id of the list needed maybe
 
 	//
@@ -39,61 +39,54 @@ public class ProductList implements Iterator<Product> {
 	 * @param Product Type
 	 */
 	public void addProduct(Product product) {
-       
+
 		/*
 		 * add product only if the id and name not existed in the productList
 		 */
+		productListArray.add(product);
 
-   for (Product product1 : productListArray){
-    if (product1.getProductId() == product.getProductId()) {
-        System.out.println(" the product is already in the list");
-    }
-    else if (product1.getProductName().equals(product.getProductName())) {
+	} // end of addProductMethod
 
-        System.out.println("choose another name for product");
-    }
-    else {
-        productListArray.add(product);
-    }
+	/*
+	 * remove the product from the ProductList Parameter product id
+	 */
+	public void remove(int productId) {
+		Iterator<Product> iteratorList = productListArray.iterator();
 
-   }
+		while (iteratorList.hasNext()) {
+			Product product = iteratorList.next();
 
-} // end of addProductMethod
-	
-	// remove the product from the ProductList
-//	public void remove(Product product) {
-//		if (entityList.contains(product.getProductId())) {
-//			entityList.remove(product);
-//		}
-//
-//		else {
-//			System.out.println("product not existed");
-//		}
-//
-//	}
+			if (product.getProductId() == productId)
+				iteratorList.remove();
+		} // end of while
 
-	
+	} // end of remove method
 
+	/* retrieve the productlist */
 	public void retrieve() {
-        Iterator<Product> iteratorList = productListArray.iterator();
-        while(iteratorList.hasNext()){
-		System.out.println(iteratorList.next());
-        }
-        
+		Iterator<Product> iteratorList = productListArray.iterator();
+		while (iteratorList.hasNext()) {
+			System.out.println(iteratorList.next());
+		}
+
 	}
 
-    @Override
-    public boolean hasNext() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'hasNext'");
-    }
+	@Override
+	public boolean hasNext() {
+		// TODO Auto-generated method stub
+		if (next() == null) {
+			return false;
+		}
 
-    @Override
-    public Product next() {
-        // TODO Auto-generated method stub
-        return next();
-    }
+		else {
+			return true;
+		}
+	}
 
-	
+	@Override
+	public Product next() {
+		// TODO Auto-generated method stub
+		return next();
+	}
 
 }

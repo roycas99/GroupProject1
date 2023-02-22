@@ -17,15 +17,17 @@ public class LibraryDriver {
 
 		// Instantiating Singleton class
 		ProductList productList = ProductList.instance();
-		productList.addEntity(product1);
-		productList.addEntity(product2);
-		productList.addEntity(product1);
+		productList.addProduct(product1);
+		productList.addProduct(product2);
+
 		// productList.addEntity(product1);
 
 		// display product objects
 
+		// productList.retrieve();
+		productList.remove(product1.getProductId());
 		productList.retrieve();
 
-	}
+	} // end of main
 
-}
+} // end of Driver class
