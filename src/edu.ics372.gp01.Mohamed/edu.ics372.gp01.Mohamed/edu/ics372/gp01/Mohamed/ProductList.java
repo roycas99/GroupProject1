@@ -1,7 +1,8 @@
 package edu.ics372.gp01.Mohamed;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 /*
  * Made class abstract because dont know 
@@ -9,12 +10,10 @@ import java.util.Iterator;
  * this class will extended EntityList by Vang
  * */
 
-public class ProductList implements Iterator<Product> {
-
-// id of the list needed maybe
+public class ProductList {
 
 	//
-	private ArrayList<Product> productListArray = new ArrayList<>();
+	private List<Product> productListArray = new ArrayList<>();
 
 	/* Singleton Design begin */
 	private static ProductList productListSingleton;
@@ -36,57 +35,72 @@ public class ProductList implements Iterator<Product> {
 	/*
 	 * method add product into list
 	 * 
-	 * @param Product Type
+	 * @paramProduct Type
 	 */
 	public void addProduct(Product product) {
+		// if the list empty just add
+		if (productListArray.isEmpty()) {
+			productListArray.add(product);
+		} // end of if
 
 		/*
-		 * add product only if the id and name not existed in the productList
+		 * otherwise add product only if the id and name not existed in the productList
 		 */
-		productListArray.add(product);
+		else {
+			boolean canAdd = true;
+			for (Product product1 : productListArray) {
+				if (product1.getProductId() == product.getProductId()) {
+					System.out.println("Throw error like - product is already exist");
+					canAdd = false;
+					break;
+				}
+				if (product1.getProductName().equals(product.getProductName())) {
+					System.out.println("Throw error like - produc name is taken");
+					canAdd = false;
+					break;
+				}
+
+			} // end of loop
+			if (canAdd) {
+				productListArray.add(product);
+
+			}
+		} // end of else
 
 	} // end of addProductMethod
 
 	/*
 	 * remove the product from the ProductList Parameter product id
+	 * 
 	 */
 	public void remove(int productId) {
-		Iterator<Product> iteratorList = productListArray.iterator();
+		if (productListArray.isEmpty()) {
+			System.out.println("list is empty");
 
-		while (iteratorList.hasNext()) {
-			Product product = iteratorList.next();
+		} else {
+			ListIterator<Product> iteratorList = productListArray.listIterator();
+			while (iteratorList.hasNext()) {
+				Product product = iteratorList.next();
+				if (product.getProductId() == productId) {
+					iteratorList.remove();
+					System.out.println("the product id " + productId + " is removed");
+					break;
+				} else {
+					System.out.println("Product is not found");
+					break;
+				}
 
-			if (product.getProductId() == productId)
-				iteratorList.remove();
-		} // end of while
+			} // end of while
+		} // end of else
 
 	} // end of remove method
 
 	/* retrieve the productlist */
 	public void retrieve() {
-		Iterator<Product> iteratorList = productListArray.iterator();
-		while (iteratorList.hasNext()) {
-			System.out.println(iteratorList.next());
+		for (Product productRetrieve : productListArray) {
+			System.out.println(productRetrieve);
 		}
 
 	}
 
-	@Override
-	public boolean hasNext() {
-		// TODO Auto-generated method stub
-		if (next() == null) {
-			return false;
-		}
-
-		else {
-			return true;
-		}
-	}
-
-	@Override
-	public Product next() {
-		// TODO Auto-generated method stub
-		return next();
-	}
-
-}
+} // end of the class
