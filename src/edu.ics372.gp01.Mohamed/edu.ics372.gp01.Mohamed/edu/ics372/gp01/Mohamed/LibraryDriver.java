@@ -1,4 +1,7 @@
 package edu.ics372.gp01.Mohamed;
+
+import java.util.Iterator;
+
 /* this class is mainly me to test 
  * how my class cohesive
  * */
@@ -13,29 +16,35 @@ public class LibraryDriver {
 		Product product1 = new Product(1, "Apple", 3.99, 10);
 		Product product2 = new Product(2, "Orange", 2.99, 20);
 		Product product3 = new Product(3, "Orange", 2.99, 20);
-
+		Product product4 = new Product(4, "Mango", 4.99, 23);
 		// create productList
 
 		// Instantiating Singleton class
 		ProductList productList = ProductList.instance();
 		// addition
-		productList.addProduct(product1);
-		productList.addProduct(product2);
+		productList.insertProduct(product1);
+		productList.insertProduct(product2);
+		productList.insertProduct(product4);
+
 		// test duplicate productId and productName
-		productList.addProduct(product1);
-		productList.addProduct(product3);
+		productList.insertProduct(product1);
+		productList.insertProduct(product3);
 
-		// display product objects
-
-		productList.retrieve();
+		// Search
+		System.out.println(productList.searchProduct(4).getProductName());
 
 		// removal
 
-		productList.remove(product1.getProductId());
+		productList.removeProduct(1);
+
+		// display product objects
+		for (Iterator iterator = productList.iterator(); iterator.hasNext();) {
+			Product product = (Product) iterator.next();
+			System.out.println(product);
+
+		}
 
 		// productList.remove(product1.getProductId());
-
-		productList.retrieve();
 
 	} // end of main
 

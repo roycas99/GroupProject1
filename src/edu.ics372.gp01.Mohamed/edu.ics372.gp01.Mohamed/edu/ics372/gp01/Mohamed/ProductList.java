@@ -1,34 +1,38 @@
 package edu.ics372.gp01.Mohamed;
 
-import java.util.ArrayList;
+import java.io.Serializable;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
 
-/*
- * Made class abstract because dont know 
- * full implementation;
- * this class will extended EntityList by Vang
- * */
+/**
+ * the class is list of products it can add,remove and retrieve a product. class
+ * is serializable has potential to extends EntityList Author: By Abshir
+ * 
+ */
 
-public class ProductList {
+public class ProductList implements Iterator<Product>, Serializable {
 
-	//
-	private List<Product> productListArray = new ArrayList<>();
+	// fields
+	private List<Product> products = new LinkedList<>();
+	private static ProductList productList;
+	private static final long serialVersionUID = 1L;
 
 	/* Singleton Design begin */
-	private static ProductList productListSingleton;
-
+	// construction
 	private ProductList() {
 
-	}// end of private constructor
+	}
+
+	// end of private constructor
 
 	public static ProductList instance() {
-		if (productListSingleton == null) {
-			productListSingleton = new ProductList();
+		if (productList == null) {
+			productList = new ProductList();
 
 		}
 
-		return productListSingleton;
+		return productList;
 	}
 
 	/* Singleton Design Phase end */
@@ -37,10 +41,11 @@ public class ProductList {
 	 * 
 	 * @paramProduct Type
 	 */
-	public void addProduct(Product product) {
+	public boolean insertProduct(Product product) {
 		// if the list empty just add
-		if (productListArray.isEmpty()) {
-			productListArray.add(product);
+		if (products.isEmpty()) {
+			products.add(product);
+			return true;
 		} // end of if
 
 		/*
@@ -48,59 +53,92 @@ public class ProductList {
 		 */
 		else {
 			boolean canAdd = true;
-			for (Product product1 : productListArray) {
+			for (Product product1 : products) {
 				if (product1.getProductId() == product.getProductId()) {
 					System.out.println("Throw error like - product is already exist");
 					canAdd = false;
 					break;
+
 				}
 				if (product1.getProductName().equals(product.getProductName())) {
-					System.out.println("Throw error like - produc name is taken");
+					System.out.println("Throw error like - product name is taken");
 					canAdd = false;
 					break;
+
 				}
 
 			} // end of loop
 			if (canAdd) {
-				productListArray.add(product);
+				products.add(product);
+				return true;
 
 			}
 		} // end of else
+		return false;
 
 	} // end of addProductMethod
 
-	/*
-	 * remove the product from the ProductList Parameter product id
+	/**
+	 * Checks whether a product with a given product id exists.
+	 * 
+	 * @paramProductId the id of the product
+	 * @return true if the product exists
 	 * 
 	 */
-	public void remove(int productId) {
-		if (productListArray.isEmpty()) {
-			System.out.println("list is empty");
+	public Product searchProduct(int productId) {
+		for (Iterator<Product> iterator = products.iterator(); iterator.hasNext();) {
+			Product product = (Product) iterator.next();
+			if (product.getProductId() == productId) {
+				return product;
+			}
+		} // end of loop
+		return null;
+	} // end of Search method
 
+	/**
+	 * remove the product from the ProductList
+	 * 
+	 * @Parameter product id
+	 * @return true if product could be removed
+	 * 
+	 */
+
+	public boolean removeProduct(int productId) {
+		Product product = searchProduct(productId);
+		if (product == null) {
+			return false;
 		} else {
-			ListIterator<Product> iteratorList = productListArray.listIterator();
-			while (iteratorList.hasNext()) {
-				Product product = iteratorList.next();
-				if (product.getProductId() == productId) {
-					iteratorList.remove();
-					System.out.println("the product id " + productId + " is removed");
-					break;
-				} else {
-					System.out.println("Product is not found");
-					break;
-				}
-
-			} // end of while
-		} // end of else
-
+			return products.remove(product);
+		}
 	} // end of remove method
 
-	/* retrieve the productlist */
-	public void retrieve() {
-		for (Product productRetrieve : productListArray) {
-			System.out.println(productRetrieve);
-		}
+	/**
+	 * Returns an iterator to all products
+	 * 
+	 * @return iterator to the collection
+	 */
+	public Iterator<Product> iterator() {
+		return products.iterator();
+	}
 
+	/**
+	 * String form of the collection
+	 * 
+	 */
+	public String toString() {
+		return products.toString();
+	}
+
+	@Override
+	public boolean hasNext() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Product next() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 } // end of the class
