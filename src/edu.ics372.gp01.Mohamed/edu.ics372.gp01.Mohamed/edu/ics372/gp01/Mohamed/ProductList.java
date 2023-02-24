@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * the class is list of products it can add,remove and retrieve a product. class
- * is serializable has potential to extends EntityList Author: By Abshir
+ * is serializable and has potential to extends EntityList Author: By Abshir
  * 
  */
 
@@ -36,10 +36,13 @@ public class ProductList implements Iterator<Product>, Serializable {
 	}
 
 	/* Singleton Design Phase end */
+
 	/*
 	 * method add product into list
 	 * 
-	 * @paramProduct Type
+	 * @param Product product Type
+	 * 
+	 * @return true if is insertable
 	 */
 	public boolean insertProduct(Product product) {
 		// if the list empty just add
