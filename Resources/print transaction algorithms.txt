@@ -1,0 +1,18 @@
+Print transaction algorithm
+
+1. get your member id and validate it
+2. get the type of transaction 
+
+3. calculate 2 two dates - first< second - because a member can visit a store a single day multiple times we included hours on the date
+
+
+4. calculate how much the member paid for the visit.
+
+5. print the date on which the user visit date and how much they paid.
+
+
+---Abshir thoughts----
+candidates for coupling
+
+- check out class -
+- library class
