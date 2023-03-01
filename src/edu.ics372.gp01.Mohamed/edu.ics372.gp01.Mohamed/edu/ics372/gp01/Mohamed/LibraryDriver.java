@@ -44,6 +44,10 @@ public class LibraryDriver {
 
 		}
 
+		Transactions ts = new Transactions("visit", "1");
+		System.out.println(ts.getDate());
+		System.out.println(ts.getMemberId());
+
 		// productList.remove(product1.getProductId());
 
 	} // end of main

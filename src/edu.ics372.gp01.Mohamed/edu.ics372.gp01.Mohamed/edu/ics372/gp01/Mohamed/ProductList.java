@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * the class is list of products it can add,remove and retrieve a product. class
- * is serializable and has potential to extends EntityList Author: By Abshir
+ * is serializable and has potential to extends EntityList. Author: By Abshir
  * 
  */
 
