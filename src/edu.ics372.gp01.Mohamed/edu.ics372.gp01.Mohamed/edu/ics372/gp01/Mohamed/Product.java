@@ -3,20 +3,20 @@ package edu.ics372.gp01.Mohamed;
 import java.util.Objects;
 
 public class Product {
-	private int productId;
+	private String productId;
 	private String productName;
 	private double price;
 	private int minimumReorderLevel;
 
-	public Product(int productId, String productName, double price, int minimumReorderLevel) {
+	public Product(String string, String productName, double price, int minimumReorderLevel) {
 		super();
-		this.productId = productId;
+		this.productId = string;
 		this.productName = productName;
 		this.price = price;
 		this.minimumReorderLevel = minimumReorderLevel;
 	}
 
-	public int getProductId() {
+	public String getProductId() {
 		return productId;
 	}
 
@@ -30,6 +30,10 @@ public class Product {
 
 	public int getMinimumReorderLevel() {
 		return minimumReorderLevel;
+	}
+	/* this method is helpful for searching a product */
+	public boolean matches(String productId2){
+		return this.productId.equals(productId);
 	}
 
 	@Override
