@@ -88,12 +88,12 @@ public class ProductList implements Iterator<Product>, Serializable {
 	 * @return true if the product exists
 	 * 
 	 */
-	public Product searchProduct(int productId) {
-		for (Iterator<Product> iterator = products.iterator(); iterator.hasNext();) {
-			Product product = (Product) iterator.next();
-			if (product.getProductId() == productId) {
-				return product;
+	public Product searchProduct(String productId) {
+		for (Product elment : products) {
+			if(elment.matches(productId)){
+				return elment;
 			}
+			
 		} // end of loop
 		return null;
 	} // end of Search method
@@ -106,7 +106,7 @@ public class ProductList implements Iterator<Product>, Serializable {
 	 * 
 	 */
 
-	public boolean removeProduct(int productId) {
+	public boolean removeProduct(String productId) {
 		Product product = searchProduct(productId);
 		if (product == null) {
 			return false;
