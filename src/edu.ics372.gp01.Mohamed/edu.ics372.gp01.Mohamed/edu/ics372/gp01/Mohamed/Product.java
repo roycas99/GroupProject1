@@ -1,8 +1,13 @@
 package edu.ics372.gp01.Mohamed;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Product {
+public class Product implements Serializable, Matchable<String> {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String productId;
 	private String productName;
 	private double price;
@@ -31,8 +36,10 @@ public class Product {
 	public int getMinimumReorderLevel() {
 		return minimumReorderLevel;
 	}
+
+	@Override
 	/* this method is helpful for searching a product */
-	public boolean matches(String productId2){
+	public boolean matches(String productId) {
 		return this.productId.equals(productId);
 	}
 

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class Transactions implements Serializable {
+public class Transaction implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private String type;
@@ -19,7 +19,7 @@ public class Transactions implements Serializable {
 	 * @param memberId The identification number of the member
 	 * 
 	 */
-	public Transactions(String type, String memberId) {
+	public Transaction(String type, String memberId) {
 		this.type = type;
 		this.memberId = memberId;
 		date = new GregorianCalendar();
@@ -76,4 +76,5 @@ public class Transactions implements Serializable {
 	public String toString() {
 		return (type + "   " + memberId);
 	}
+
 } // end of Transaction

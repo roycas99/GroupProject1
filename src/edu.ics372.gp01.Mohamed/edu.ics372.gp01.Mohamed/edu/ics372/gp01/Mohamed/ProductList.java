@@ -90,10 +90,10 @@ public class ProductList implements Iterator<Product>, Serializable {
 	 */
 	public Product searchProduct(String productId) {
 		for (Product elment : products) {
-			if(elment.matches(productId)){
+			if (elment.matches(productId)) {
 				return elment;
 			}
-			
+
 		} // end of loop
 		return null;
 	} // end of Search method

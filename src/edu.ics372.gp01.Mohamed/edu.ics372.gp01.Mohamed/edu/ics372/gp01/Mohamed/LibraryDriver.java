@@ -13,10 +13,10 @@ public class LibraryDriver {
 
 		// create Product Objects
 
-		Product product1 = new Product(1, "Apple", 3.99, 10);
-		Product product2 = new Product(2, "Orange", 2.99, 20);
-		Product product3 = new Product(3, "Orange", 2.99, 20);
-		Product product4 = new Product(4, "Mango", 4.99, 23);
+		Product product1 = new Product("1", "Apple", 3.99, 10);
+		Product product2 = new Product("2", "Orange", 2.99, 20);
+		Product product3 = new Product("3", "Orange", 2.99, 20);
+		Product product4 = new Product("4", "Mango", 4.99, 23);
 		// create productList
 
 		// Instantiating Singleton class
@@ -31,11 +31,14 @@ public class LibraryDriver {
 		productList.insertProduct(product3);
 
 		// Search
-		System.out.println(productList.searchProduct(4).getProductName());
+		System.out.println("------------------search result-----------------------");
+		System.out.println(productList.searchProduct("4").getProductName());
 
 		// removal
 
-		productList.removeProduct(1);
+		System.out.println("-------------product 1 removal------------- ");
+
+		productList.removeProduct("1");
 
 		// display product objects
 		for (Iterator iterator = productList.iterator(); iterator.hasNext();) {
@@ -44,7 +47,7 @@ public class LibraryDriver {
 
 		}
 
-		Transactions ts = new Transactions("visit", "1");
+		Transaction ts = new Transaction("visit", "1");
 		System.out.println(ts.getDate());
 		System.out.println(ts.getMemberId());
 
