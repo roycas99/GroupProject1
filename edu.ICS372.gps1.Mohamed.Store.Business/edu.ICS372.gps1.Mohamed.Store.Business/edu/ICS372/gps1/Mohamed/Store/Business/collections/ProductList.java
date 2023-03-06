@@ -1,14 +1,17 @@
-package edu.ics372.gp01.Mohamed;
+package edu.ICS372.gps1.Mohamed.Store.Business.collections;
 
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import edu.ICS372.gps1.Mohamed.Store.Business.entities.Product;
+
 /**
  * the class is list of products it can add,remove and retrieve a product. class
  * is serializable and has potential to extends EntityList. Author: By Abshir
  * 
+ * @author Abshir
  */
 
 public class ProductList implements Iterator<Product>, Serializable {
@@ -57,13 +60,13 @@ public class ProductList implements Iterator<Product>, Serializable {
 		else {
 			boolean canAdd = true;
 			for (Product product1 : products) {
-				if (product1.getProductId() == product.getProductId()) {
+				if (product1.getProductId().matches(product.getProductId())) {
 					System.out.println("Throw error like - product is already exist");
 					canAdd = false;
 					break;
 
 				}
-				if (product1.getProductName().equals(product.getProductName())) {
+				if (product1.getProductName().matches(product.getProductName())) {
 					System.out.println("Throw error like - product name is taken");
 					canAdd = false;
 					break;
@@ -89,9 +92,9 @@ public class ProductList implements Iterator<Product>, Serializable {
 	 * 
 	 */
 	public Product searchProduct(String productId) {
-		for (Product elment : products) {
-			if (elment.matches(productId)) {
-				return elment;
+		for (Product element : products) {
+			if (element.getProductId().equals(productId)) {
+				return element;
 			}
 
 		} // end of loop
