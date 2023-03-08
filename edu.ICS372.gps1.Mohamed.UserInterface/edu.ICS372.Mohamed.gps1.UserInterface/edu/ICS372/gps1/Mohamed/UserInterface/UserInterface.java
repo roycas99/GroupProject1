@@ -387,9 +387,9 @@ public class UserInterface {
 			case ADD_PRODUCT:
 				addProduct();
 				break;
-//			case CHANGE_PRODUCT_PRICE:
-//				changeProductPrice();
-//				break;
+			case CHANGE_PRODUCT_PRICE:
+				changeProductPrice();
+				break;
 			case RETREIVE_PRODUCT:
 				retreiveProduct();
 				break;
@@ -533,11 +533,27 @@ public class UserInterface {
 		}
 
 	}
+
 //
-//	private void changeProductPrice() {
-//		// TODO Auto-generated method stub
-//
-//	}
+	private void changeProductPrice() {
+		Request.instance().setProductId(getNumber("Enter product id"));
+		System.out.println("Line 265, ProductId = " + Request.instance().getProductId());
+		Result result = new Result();
+		// System.out.println(result.getProductPrice());
+
+		// need evaluation
+		// Request.instance().setProductPrice((getPrice("Enter product price")));
+		Request.instance().setProductPrice(getPrice("Enter the new Price"));
+		result = groceryStore.retreiveProduct(Request.instance());
+		if (result.getResultCode() == Result.PRODUCT_FOUND) {
+
+			// Request.instance().setNewPrice((getPrice("Enter product price")));
+			System.out.println(
+					"ProductName: " + result.getProductName() + ", getProductPrice: " + result.getProductPrice());
+		} else {
+			System.out.println("Line 273, Fail, resultCode = " + result.getResultCode());
+		}
+	}
 
 	/**
 	 * The method to start the application. Simply calls process().

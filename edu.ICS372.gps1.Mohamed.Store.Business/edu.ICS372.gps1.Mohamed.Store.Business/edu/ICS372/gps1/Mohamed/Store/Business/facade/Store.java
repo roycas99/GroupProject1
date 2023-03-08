@@ -298,4 +298,25 @@ public class Store implements Serializable {
 //			return new SafeSellableProductListIterator(member.getShoppingCart().iterator());
 //		}
 //	} // end of Iterator
+	public Result changeProductPrice(Request request) {
+		Result result = new Result();
+		// setting new Price
+		Product product = catalog.searchProduct(request.getProductId());
+		System.out.println(product.toString());
+		// product.price = request.price;
+
+//		Product product = new Product(request.getProductId(), request.getProductName(), request.getProductPrice(),
+//				request.getProductMinimumReorderLevel());
+		if (product != null) {
+			// needs evaluation!!!!
+			result.setResultCode(Result.PRODUCT_FOUND);
+			product.setPrice(request.getProductPrice());
+			result.setProductPrice(product.getPrice());
+			// product.setPrice(request.getNewPrice());
+			return result;
+		}
+		result.setResultCode(Result.ERROR);
+		return result;
+	}
+
 } // end of the class

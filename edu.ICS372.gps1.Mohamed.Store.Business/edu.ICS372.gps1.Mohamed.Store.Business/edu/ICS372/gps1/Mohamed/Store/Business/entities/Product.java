@@ -46,6 +46,10 @@ public class Product implements Serializable {
 		return price;
 	}
 
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
 	public int getMinimumReorderLevel() {
 		return minimumReorderLevel;
 	}
