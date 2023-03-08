@@ -534,25 +534,29 @@ public class UserInterface {
 
 	}
 
-//
+	/*
+	 * the method is able to change the price of a specific product.
+	 * 
+	 * @author Abshir
+	 * 
+	 */
 	private void changeProductPrice() {
+
 		Request.instance().setProductId(getNumber("Enter product id"));
-		System.out.println("Line 265, ProductId = " + Request.instance().getProductId());
-		Result result = new Result();
-		// System.out.println(result.getProductPrice());
+		System.out.println("Line 265, ProductId = " + Request.instance().getProductId() + ", Product price "
+				+ Request.instance().getProductPrice());
 
-		// need evaluation
-		// Request.instance().setProductPrice((getPrice("Enter product price")));
+		// Setting the product price into the the new price
 		Request.instance().setProductPrice(getPrice("Enter the new Price"));
-		result = groceryStore.retreiveProduct(Request.instance());
-		if (result.getResultCode() == Result.PRODUCT_FOUND) {
+		// retrieving the old product
+		Result result = groceryStore.retreiveProduct(Request.instance());
 
-			// Request.instance().setNewPrice((getPrice("Enter product price")));
-			System.out.println(
-					"ProductName: " + result.getProductName() + ", getProductPrice: " + result.getProductPrice());
-		} else {
-			System.out.println("Line 273, Fail, resultCode = " + result.getResultCode());
-		}
+		Result newResult = new Result();
+
+		newResult = groceryStore.changeProductPrice(Request.instance(), result);
+		System.out
+				.println("The new price for the " + newResult.getProductName() + " is: " + newResult.getProductPrice());
+
 	}
 
 	/**

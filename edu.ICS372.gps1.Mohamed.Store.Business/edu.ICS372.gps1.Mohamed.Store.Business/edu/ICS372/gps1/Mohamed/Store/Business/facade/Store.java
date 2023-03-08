@@ -298,25 +298,26 @@ public class Store implements Serializable {
 //			return new SafeSellableProductListIterator(member.getShoppingCart().iterator());
 //		}
 //	} // end of Iterator
-	public Result changeProductPrice(Request request) {
-		Result result = new Result();
-		// setting new Price
-		Product product = catalog.searchProduct(request.getProductId());
-		System.out.println(product.toString());
-		// product.price = request.price;
 
-//		Product product = new Product(request.getProductId(), request.getProductName(), request.getProductPrice(),
-//				request.getProductMinimumReorderLevel());
-		if (product != null) {
-			// needs evaluation!!!!
-			result.setResultCode(Result.PRODUCT_FOUND);
-			product.setPrice(request.getProductPrice());
-			result.setProductPrice(product.getPrice());
-			// product.setPrice(request.getNewPrice());
-			return result;
-		}
-		result.setResultCode(Result.ERROR);
+	/*
+	 * Changes the old price of a product into new price
+	 * 
+	 * @param request, result Objects
+	 * 
+	 * @return a new result object with new price attribute
+	 * 
+	 * @author Abshir
+	 */
+	public Result changeProductPrice(Request request, Result result) {
+		Result resultLocal = new Result();
+		// get the product from the list
+		Product newProduct = catalog.searchProduct(result.getProductId());
+		// update the price of the product
+		newProduct.setPrice(request.getProductPrice());
+		resultLocal = result;
+		resultLocal.setProductPrice(request.getProductPrice());
 		return result;
-	}
 
-} // end of the class
+	}// end of changeProductPrice class
+}
+// end of the class
