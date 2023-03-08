@@ -7,6 +7,8 @@ import java.util.Objects;
  * 
  * */
 
+import edu.ICS372.gps1.Mohamed.Store.Business.Exceptions.ProductCustomExceptions;
+
 public class Product implements Serializable {
 	/**
 	 * 
@@ -17,8 +19,15 @@ public class Product implements Serializable {
 	private double price;
 	private int minimumReorderLevel;
 
-	public Product(int productId, String productName, double price, int minimumReorderLevel) {
+	public Product(int productId, String productName, double price, int minimumReorderLevel)
+			throws ProductCustomExceptions {
 		super();
+		/*
+		 * Product id cannot be zero or less than zero
+		 */
+		if (productId <= 0) {
+			throw new ProductCustomExceptions("Product ID cannot be zero");
+		}
 		this.productId = productId;
 		this.productName = productName;
 		this.price = price;
