@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import edu.ICS372.gps1.Mohamed.Store.Business.Exceptions.ProductCustomExceptions;
 import edu.ICS372.gps1.Mohamed.Store.Business.entities.Product;
 
 /**
@@ -47,7 +48,7 @@ public class ProductList implements Iterator<Product>, Serializable {
 	 * 
 	 * @return true if is insertable
 	 */
-	public boolean insertProduct(Product product) {
+	public boolean insertProduct(Product product) throws ProductCustomExceptions {
 		// if the list empty just add
 		if (products.isEmpty()) {
 			products.add(product);
@@ -61,15 +62,11 @@ public class ProductList implements Iterator<Product>, Serializable {
 			boolean canAdd = true;
 			for (Product product1 : products) {
 				if (product1.getProductId() == (product.getProductId())) {
-					System.out.println("Throw error like - product is already exist");
-					canAdd = false;
-					break;
+					throw new ProductCustomExceptions("The product is already existed");
 
 				}
 				if (product1.getProductName().equals(product.getProductName())) {
-					System.out.println("Throw error like - product name is taken");
-					canAdd = false;
-					break;
+					throw new ProductCustomExceptions("product name is taken");
 
 				}
 
@@ -89,9 +86,11 @@ public class ProductList implements Iterator<Product>, Serializable {
 	 * 
 	 * @paramProductId the id of the product
 	 * @return true if the product exists
+	 * @throws ProductCustomExceptions
 	 * 
 	 */
 	public Product searchProduct(int productId) {
+
 		for (Product element : products) {
 			if (element.getProductId() == productId) {
 				return element;
@@ -99,6 +98,7 @@ public class ProductList implements Iterator<Product>, Serializable {
 
 		} // end of loop
 		return null;
+
 	} // end of Search method
 
 	/**
@@ -106,6 +106,7 @@ public class ProductList implements Iterator<Product>, Serializable {
 	 * 
 	 * @Parameter product id
 	 * @return true if product could be removed
+	 * @throws ProductCustomExceptions
 	 * 
 	 */
 

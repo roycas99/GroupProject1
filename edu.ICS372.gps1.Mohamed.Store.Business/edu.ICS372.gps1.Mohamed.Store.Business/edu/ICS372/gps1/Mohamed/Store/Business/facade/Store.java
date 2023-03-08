@@ -8,6 +8,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Iterator;
 
+import edu.ICS372.gps1.Mohamed.Store.Business.Exceptions.ProductCustomExceptions;
 import edu.ICS372.gps1.Mohamed.Store.Business.collections.MemberList;
 import edu.ICS372.gps1.Mohamed.Store.Business.collections.ProductList;
 import edu.ICS372.gps1.Mohamed.Store.Business.entities.Product;
@@ -46,8 +47,9 @@ public class Store implements Serializable {
 	 * @param author author name
 	 * @param id     book id
 	 * @return the Book object created
+	 * @throws ProductCustomExceptions
 	 */
-	public Result addProduct(Request request) {
+	public Result addProduct(Request request) throws ProductCustomExceptions {
 		Result result = new Result();
 		// making Product
 		Product product = new Product(request.getProductId(), request.getProductName(), request.getProductPrice(),
@@ -68,6 +70,7 @@ public class Store implements Serializable {
 	 * @param address member address
 	 * @param phone   member phone
 	 * @return the Member object created
+	 * @throws ProductCustomExceptions
 	 */
 //	public Result addMember(Request request) {
 //		Result result = new Result();
@@ -174,6 +177,7 @@ public class Store implements Serializable {
 	 * 
 	 * @param request object of the Request
 	 * @return a result object modified by Abshir
+	 * @throws ProductCustomExceptions
 	 */
 	public Result removeProduct(Request request) {
 		Result result = new Result();

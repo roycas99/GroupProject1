@@ -10,6 +10,7 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.StringTokenizer;
 
+import edu.ICS372.gps1.Mohamed.Store.Business.Exceptions.ProductCustomExceptions;
 import edu.ICS372.gps1.Mohamed.Store.Business.facade.Request;
 import edu.ICS372.gps1.Mohamed.Store.Business.facade.Result;
 import edu.ICS372.gps1.Mohamed.Store.Business.facade.Store;
@@ -265,9 +266,11 @@ public class UserInterface {
 	 * appropriate values and uses the appropriate Store method for adding the
 	 * product.
 	 * 
+	 * @throws ProductCustomExceptions
+	 * 
 	 * @modified by Abshir
 	 */
-	public void addProduct() {
+	public void addProduct() throws ProductCustomExceptions {
 		do {
 			Request.instance().setProductName(getName("Enter  name"));
 			Request.instance().setProductId((getNumber("Enter product id")));
@@ -364,7 +367,7 @@ public class UserInterface {
 		}
 	}
 
-	public void process() {
+	public void process() throws ProductCustomExceptions {
 		int command;
 		help();
 		while ((command = getCommand()) != EXIT) {
@@ -540,8 +543,14 @@ public class UserInterface {
 	 * The method to start the application. Simply calls process().
 	 * 
 	 * @param args not used
+	 * @throws ProductCustomExceptions
 	 */
 	public static void main(String[] args) {
-		UserInterface.instance().process();
+		try {
+			UserInterface.instance().process();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
