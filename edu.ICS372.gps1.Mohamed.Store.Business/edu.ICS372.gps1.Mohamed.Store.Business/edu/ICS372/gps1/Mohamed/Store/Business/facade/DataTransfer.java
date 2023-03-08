@@ -4,6 +4,8 @@ import edu.ICS372.gps1.Mohamed.Store.Business.entities.Product;
 
 public abstract class DataTransfer<T> {
 	private int productId;
+	private double newPrice;
+
 	private int productAmountInCart;
 	private String productName;
 	private double productPrice;
@@ -154,6 +156,16 @@ public abstract class DataTransfer<T> {
 		this.productPrice = product.getPrice();
 		this.productMinimumReorderLevel = product.getMinimumReorderLevel();
 	}
+
+// just playing
+//	public void setProductPrice(Request product) {
+//		this.newPrice = product.getProductPrice();
+//
+//	}
+//
+//	public double getNewPrice() {
+//		return newPrice;
+//	}
 
 	/**
 	 * @return the shoppingCart
