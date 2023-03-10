@@ -10,14 +10,17 @@ import java.util.Iterator;
 
 import edu.ICS372.gps1.Mohamed.Store.Business.Exceptions.ProductCustomExceptions;
 import edu.ICS372.gps1.Mohamed.Store.Business.collections.MemberList;
+import edu.ICS372.gps1.Mohamed.Store.Business.collections.OrderList;
 import edu.ICS372.gps1.Mohamed.Store.Business.collections.ProductList;
 import edu.ICS372.gps1.Mohamed.Store.Business.entities.Product;
+import edu.ICS372.gps1.Mohamed.Store.Business.iterators.SafeOrderListIterator;
 import edu.ICS372.gps1.Mohamed.Store.Business.iterators.SafeProductListIterator;
 
 public class Store implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private ProductList catalog = ProductList.instance();
 	private MemberList members = null;
+	private OrderList orderList = OrderList.instance();
 	private static Store singletonGroceryStore;
 
 	/**
@@ -128,9 +131,9 @@ public class Store implements Serializable {
 		System.out.println("Line 132, GorceryStore.retreiveProduct(): ProductId = " + request.getProductId());
 		Result result = new Result();
 		Product product = catalog.searchProduct(request.getProductId());
-		System.out.println("Line 135, product.getId = " + product.getProductId());
+		System.out.println("Line 135, product.getId = " + product.getId());
 		// issue started after this line
-		if (product.getProductId() == 0) {
+		if (product.getId() == 0) {
 			result.setResultCode(Result.PRODUCT_NOT_FOUND);
 			System.out.println(
 					"Line 114, GS.addProduct.products.addProduct(product): ResultCode = " + result.getResultCode());
@@ -173,6 +176,13 @@ public class Store implements Serializable {
 	} // end of getProductList
 
 	/**
+	 * @author Jeff
+	 */
+	public Iterator<Result> getOrderList() {
+		return new SafeOrderListIterator(orderList.iterator());
+	} // end getOrderList
+
+	/**
 	 * Removes a specific product from the catalog/productList
 	 * 
 	 * @param request object of the Request
@@ -182,7 +192,7 @@ public class Store implements Serializable {
 	public Result removeProduct(Request request) {
 		Result result = new Result();
 		Product product = catalog.searchProduct(request.getProductId());
-		if (product.getProductId() == 0) {
+		if (product.getId() == 0) {
 			result.setResultCode(Result.PRODUCT_NOT_FOUND);
 			return result;
 		}

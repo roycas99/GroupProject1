@@ -275,14 +275,14 @@ public class UserInterface {
 			Request.instance().setProductName(getName("Enter  name"));
 			Request.instance().setProductId((getNumber("Enter product id")));
 			Request.instance().setProductPrice((getPrice("Enter product price")));
-			Request.instance().setProductMinimumReorderLevel(getNumber("Enter the product quantity"));
+			Request.instance().setProductMinimumReorderLevel(getNumber("Enter the product minimum reoorder level"));
 			Result result = groceryStore.addProduct(Request.instance());
 			if (result.getResultCode() != Result.SUCCESS) {
 				System.out.println("Product could not be added");
 			} else {
 				System.out.println("Product " + result.getProductName() + " added");
 			}
-		} while (yesOrNo("Add more books?"));
+		} while (yesOrNo("Add more products ?"));
 	}
 
 	/**
@@ -323,11 +323,12 @@ public class UserInterface {
 	 */
 	public void getProductList() {
 		Iterator<Result> iterator = groceryStore.getProductList();
-		System.out.println("List All Products [Name, product id, price, quantity]");
+		System.out.println("List All Products [Name, product id, price, minimumReorderLevel, product stock]");
 		while (iterator.hasNext()) {
 			Result result = iterator.next();
-			System.out.println("[" + result.getProductName() + ", " + result.getProductId() + ", "
-					+ result.getProductPrice() + ", " + result.getProductMinimumReorderLevel() + "]");
+			System.out.println(
+					"[" + result.getProductName() + ", " + result.getProductId() + ", " + result.getProductPrice()
+							+ ", " + result.getProductMinimumReorderLevel() + ", " + result.getProductStock() + "]");
 		}
 		System.out.println("End of listing");
 	}
@@ -400,9 +401,9 @@ public class UserInterface {
 			case LIST_ALL_PRODUCTS:
 				getProductList();
 				break;
-//			case LIST_OUTSTANDING_ORDERS:
-//				processOrders();
-//				break;
+			case LIST_OUTSTANDING_ORDERS:
+				listOutstandingOrders();
+				break;
 //			case SHOPPINGCART_MENU:
 //				ShoppingCartMenu();
 //				break;
@@ -558,6 +559,17 @@ public class UserInterface {
 				.println("The new price for the " + newResult.getProductName() + " is: " + newResult.getProductPrice());
 
 	}
+
+	private void listOutstandingOrders() {
+		Iterator<Result> iterator = groceryStore.getOrderList();
+		System.out.println("List All Orders [Name, product id, quantity]");
+		while (iterator.hasNext()) {
+			Result result = iterator.next();
+			System.out.println("[" + result.getProductName() + ", " + result.getProductId() + ", "
+					+ result.getOrderQuantity() + "]");
+		}
+		System.out.println("End of listing");
+	}// end of listOutStanding orders
 
 	/**
 	 * The method to start the application. Simply calls process().

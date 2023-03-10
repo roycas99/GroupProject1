@@ -1,5 +1,6 @@
 package edu.ICS372.gps1.Mohamed.Store.Business.facade;
 
+import edu.ICS372.gps1.Mohamed.Store.Business.entities.Order;
 import edu.ICS372.gps1.Mohamed.Store.Business.entities.Product;
 
 public abstract class DataTransfer<T> {
@@ -8,6 +9,8 @@ public abstract class DataTransfer<T> {
 	private String productName;
 	private double productPrice;
 	private int productMinimumReorderLevel;
+	private int productStock;
+	private int orderQuantity;
 	private int memberId;
 	private String memberName;
 	private String memberAddress;
@@ -113,6 +116,14 @@ public abstract class DataTransfer<T> {
 		return productPrice;
 	}
 
+	public int getProductStock() {
+		return productStock;
+	}
+
+	public void setProductStock(int productStock) {
+		this.productStock = productStock;
+	}
+
 //	public double getMemberFee() {
 //		return memberFee;
 //	}
@@ -149,10 +160,17 @@ public abstract class DataTransfer<T> {
 	 * @modified by Abshir
 	 */
 	public void setProductFields(Product product) {
-		this.productId = product.getProductId();
-		this.productName = product.getProductName();
+		this.productId = product.getId();
+		this.productName = product.getName();
 		this.productPrice = product.getPrice();
 		this.productMinimumReorderLevel = product.getMinimumReorderLevel();
+		this.productStock = product.getProducStock();
+	}
+
+	public void setOrderFields(Order order) {
+		this.productName = order.getName();
+		this.productId = order.getId();
+		this.orderQuantity = order.getOrderQuantity();
 	}
 
 	/**
@@ -161,6 +179,14 @@ public abstract class DataTransfer<T> {
 //	public List<SellableProduct> getShoppingCart() {
 //		return shoppingCart;
 //	}
+
+	public int getOrderQuantity() {
+		return orderQuantity;
+	}
+
+	public void setOrderQuantity(int orderQuantity) {
+		this.orderQuantity = orderQuantity;
+	}
 
 	/**
 	 * @param shoppingCart the shoppingCart to set
@@ -186,6 +212,7 @@ public abstract class DataTransfer<T> {
 		productName = "Null";
 		productMinimumReorderLevel = 0;
 		productPrice = 0;
+		productStock = 0;
 		memberId = 0;
 		memberName = "Null";
 		memberPhone = "Null";

@@ -61,11 +61,11 @@ public class ProductList implements Iterator<Product>, Serializable {
 		else {
 			boolean canAdd = true;
 			for (Product product1 : products) {
-				if (product1.getProductId() == (product.getProductId())) {
+				if (product1.getId() == (product.getId())) {
 					throw new ProductCustomExceptions("The product is already existed");
 
 				}
-				if (product1.getProductName().equals(product.getProductName())) {
+				if (product1.getName().equals(product.getName())) {
 					throw new ProductCustomExceptions("product name is taken");
 
 				}
@@ -92,7 +92,7 @@ public class ProductList implements Iterator<Product>, Serializable {
 	public Product searchProduct(int productId) {
 
 		for (Product element : products) {
-			if (element.getProductId() == productId) {
+			if (element.getId() == productId) {
 				return element;
 			}
 
