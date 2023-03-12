@@ -12,6 +12,7 @@ import edu.ICS372.gps1.Mohamed.Store.Business.Exceptions.ProductCustomExceptions
 import edu.ICS372.gps1.Mohamed.Store.Business.collections.MemberList;
 import edu.ICS372.gps1.Mohamed.Store.Business.collections.OrderList;
 import edu.ICS372.gps1.Mohamed.Store.Business.collections.ProductList;
+import edu.ICS372.gps1.Mohamed.Store.Business.entities.Order;
 import edu.ICS372.gps1.Mohamed.Store.Business.entities.Product;
 import edu.ICS372.gps1.Mohamed.Store.Business.iterators.SafeOrderListIterator;
 import edu.ICS372.gps1.Mohamed.Store.Business.iterators.SafeProductListIterator;
@@ -20,7 +21,7 @@ public class Store implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private ProductList catalog = ProductList.instance();
 	private MemberList members = null;
-	private OrderList orderList = OrderList.instance();
+	private OrderList orders = OrderList.instance();
 	private static Store singletonGroceryStore;
 
 	/**
@@ -55,7 +56,7 @@ public class Store implements Serializable {
 	public Result addProduct(Request request) throws ProductCustomExceptions {
 		Result result = new Result();
 		// making Product
-		Product product = new Product(request.getProductId(), request.getProductName(), request.getProductPrice(),
+		Product product = new Product(request.getId(), request.getName(), request.getProductPrice(),
 				request.getProductMinimumReorderLevel());
 		if (catalog.insertProduct(product)) {
 			result.setResultCode(Result.SUCCESS);
@@ -128,9 +129,9 @@ public class Store implements Serializable {
 	 * 
 	 */
 	public Result retreiveProduct(Request request) {
-		System.out.println("Line 132, GorceryStore.retreiveProduct(): ProductId = " + request.getProductId());
+		System.out.println("Line 132, GorceryStore.retreiveProduct(): ProductId = " + request.getId());
 		Result result = new Result();
-		Product product = catalog.searchProduct(request.getProductId());
+		Product product = catalog.searchProduct(request.getId());
 		System.out.println("Line 135, product.getId = " + product.getId());
 		// issue started after this line
 		if (product.getId() == 0) {
@@ -156,7 +157,7 @@ public class Store implements Serializable {
 	 * 
 	 */
 	public Iterator<Result> getProducts(Request request) {
-		Product product = catalog.searchProduct(request.getProductId());
+		Product product = catalog.searchProduct(request.getId());
 		if (product == null) {
 			return null;
 		} else {
@@ -179,7 +180,7 @@ public class Store implements Serializable {
 	 * @author Jeff
 	 */
 	public Iterator<Result> getOrderList() {
-		return new SafeOrderListIterator(orderList.iterator());
+		return new SafeOrderListIterator(orders.iterator());
 	} // end getOrderList
 
 	/**
@@ -191,14 +192,14 @@ public class Store implements Serializable {
 	 */
 	public Result removeProduct(Request request) {
 		Result result = new Result();
-		Product product = catalog.searchProduct(request.getProductId());
+		Product product = catalog.searchProduct(request.getId());
 		if (product.getId() == 0) {
 			result.setResultCode(Result.PRODUCT_NOT_FOUND);
 			return result;
 		}
 		result.setProductFields(product);
 
-		if (catalog.removeProduct(request.getProductId())) {
+		if (catalog.removeProduct(request.getId())) {
 			result.setResultCode(Result.SUCCESS);
 			return result;
 		} else {
@@ -321,7 +322,7 @@ public class Store implements Serializable {
 	public Result changeProductPrice(Request request, Result result) {
 		Result resultLocal = new Result();
 		// get the product from the list
-		Product newProduct = catalog.searchProduct(result.getProductId());
+		Product newProduct = catalog.searchProduct(result.getId());
 		// update the price of the product
 		newProduct.setPrice(request.getProductPrice());
 		resultLocal = result;
@@ -329,5 +330,27 @@ public class Store implements Serializable {
 		return result;
 
 	}// end of changeProductPrice class
-}
-// end of the class
+
+	public Result processOrder(Request request) {
+
+		Result result = new Result();
+		Order order = orders.searchOrder(request.getId());
+		Product product = catalog.searchProduct(request.getId());
+
+		if (order.getId() == 0 && product.getId() == 0) {
+
+			throw new NullPointerException("Order/product was null");
+
+		} else {
+			product.setProducStock(product.getProducStock() + request.getOrderQuantity());
+			if (orders.removeOrder(order.getId())) {
+				result.setResultCode(Result.SUCCESS);
+				return result;
+			} else {
+				throw new NullPointerException("Order was null");
+
+			}
+		}
+
+	}
+}// end of the class
