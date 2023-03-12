@@ -272,15 +272,15 @@ public class UserInterface {
 	 */
 	public void addProduct() throws ProductCustomExceptions {
 		do {
-			Request.instance().setProductName(getName("Enter  name"));
-			Request.instance().setProductId((getNumber("Enter product id")));
+			Request.instance().setName(getName("Enter  name"));
+			Request.instance().setId((getNumber("Enter product id")));
 			Request.instance().setProductPrice((getPrice("Enter product price")));
 			Request.instance().setProductMinimumReorderLevel(getNumber("Enter the product minimum reoorder level"));
 			Result result = groceryStore.addProduct(Request.instance());
 			if (result.getResultCode() != Result.SUCCESS) {
 				System.out.println("Product could not be added");
 			} else {
-				System.out.println("Product " + result.getProductName() + " added");
+				System.out.println("Product " + result.getName() + " added");
 			}
 		} while (yesOrNo("Add more products ?"));
 	}
@@ -326,9 +326,8 @@ public class UserInterface {
 		System.out.println("List All Products [Name, product id, price, minimumReorderLevel, product stock]");
 		while (iterator.hasNext()) {
 			Result result = iterator.next();
-			System.out.println(
-					"[" + result.getProductName() + ", " + result.getProductId() + ", " + result.getProductPrice()
-							+ ", " + result.getProductMinimumReorderLevel() + ", " + result.getProductStock() + "]");
+			System.out.println("[" + result.getName() + ", " + result.getId() + ", " + result.getProductPrice() + ", "
+					+ result.getProductMinimumReorderLevel() + ", " + result.getProductStock() + "]");
 		}
 		System.out.println("End of listing");
 	}
@@ -407,9 +406,9 @@ public class UserInterface {
 //			case SHOPPINGCART_MENU:
 //				ShoppingCartMenu();
 //				break;
-//			case PROCESS_SHIPMENT:
-//				processShipment();
-//				break;
+			case PROCESS_SHIPMENT:
+				processShipment();
+				break;
 //			case PRINT_TRANSACTIONS:
 //				printTransactions();
 //				break;
@@ -504,13 +503,13 @@ public class UserInterface {
 
 	private void retreiveProduct() {
 		System.out.println("Line 263, UI.retreiveMember()");
-		Request.instance().setProductId(getNumber("Enter product id"));
-		System.out.println("Line 265, ProductId = " + Request.instance().getProductId());
+		Request.instance().setId(getNumber("Enter product id"));
+		System.out.println("Line 265, ProductId = " + Request.instance().getId());
 		Result result = groceryStore.retreiveProduct(Request.instance());
 		if (result.getResultCode() == Result.PRODUCT_FOUND) {
 			System.out.println("Product was retreived");
-			System.out.println("[ProductId: " + result.getProductId() + ", ProductName: " + result.getProductName()
-					+ ", getProductPrice: " + result.getProductPrice() + ", ProductQuanitity: "
+			System.out.println("[ProductId: " + result.getId() + ", ProductName: " + result.getName()
+					+ ", getProductPrice: " + result.getProductPrice() + ", Product minimum reorder level: "
 					+ result.getProductMinimumReorderLevel() + "]");
 		} else {
 			System.out.println("Line 273, Fail, resultCode = " + result.getResultCode());
@@ -525,10 +524,10 @@ public class UserInterface {
 	 */
 
 	private void removeProduct() {
-		Request.instance().setProductId(getNumber("Enter Product Id"));
+		Request.instance().setId(getNumber("Enter Product Id"));
 		Result result = groceryStore.removeProduct(Request.instance());
 		if (result.getResultCode() == Result.SUCCESS) {
-			System.out.println("Product: " + result.getProductId() + " Removed");
+			System.out.println("Product: " + result.getId() + " Removed");
 		} else {
 			System.out.println("Product could not be added");
 		}
@@ -543,8 +542,8 @@ public class UserInterface {
 	 */
 	private void changeProductPrice() {
 
-		Request.instance().setProductId(getNumber("Enter product id"));
-		System.out.println("Line 265, ProductId = " + Request.instance().getProductId() + ", Product price "
+		Request.instance().setId(getNumber("Enter product id"));
+		System.out.println("Line 265, ProductId = " + Request.instance().getId() + ", Product price "
 				+ Request.instance().getProductPrice());
 
 		// Setting the product price into the the new price
@@ -555,21 +554,39 @@ public class UserInterface {
 		Result newResult = new Result();
 
 		newResult = groceryStore.changeProductPrice(Request.instance(), result);
-		System.out
-				.println("The new price for the " + newResult.getProductName() + " is: " + newResult.getProductPrice());
+		System.out.println("The new price for the " + newResult.getName() + " is: " + newResult.getProductPrice());
 
 	}
 
 	private void listOutstandingOrders() {
 		Iterator<Result> iterator = groceryStore.getOrderList();
-		System.out.println("List All Orders [Name, product id, quantity]");
+		System.out.println("List All Orders [order Name, order id, quantity ordered]");
 		while (iterator.hasNext()) {
 			Result result = iterator.next();
-			System.out.println("[" + result.getProductName() + ", " + result.getProductId() + ", "
-					+ result.getOrderQuantity() + "]");
+			System.out.println("[" + result.getName() + ", " + result.getId() + ", " + result.getOrderQuantity() + "]");
 		}
 		System.out.println("End of listing");
 	}// end of listOutStanding orders
+
+	private void processShipment() {
+		do {
+			Request.instance().setId(getNumber("Enter order id"));
+			Request.instance().setOrderQuantity(getNumber("Enter the order quantity the store received"));
+
+			Result result = groceryStore.processOrder(Request.instance());
+			if (result.getResultCode() != Result.SUCCESS) {
+				System.out.println("Shipment could not be found");
+				break;
+			} else {
+				System.out.println("Shipment processed.");
+				break;
+			}
+
+		} while (yesOrNo("Process another shipment?\""));
+
+	}
+
+	// end of processShipment
 
 	/**
 	 * The method to start the application. Simply calls process().
@@ -578,6 +595,7 @@ public class UserInterface {
 	 * @throws ProductCustomExceptions
 	 */
 	public static void main(String[] args) {
+		System.out.println("Running Abshir's UserInterface");
 		try {
 			UserInterface.instance().process();
 		} catch (Exception e) {
