@@ -8,6 +8,7 @@ import java.util.Objects;
  * */
 
 import edu.ICS372.gps1.Mohamed.Store.Business.Exceptions.ProductCustomExceptions;
+import edu.ICS372.gps1.Mohamed.Store.Business.collections.OrderList;
 
 public class Product extends Entity implements Serializable {
 	/**
@@ -29,13 +30,19 @@ public class Product extends Entity implements Serializable {
 		this.price = price;
 		this.minimumReorderLevel = minimumReorderLevel;
 		/*
-		 * the system will automatically reorder the new product and set its quanittiy
-		 * 2xMinimum reorder Level
+		 * the system will automatically reorder the new product
+		 * 
+		 * @ add the new order into the list order
+		 * 
+		 * @and set its product stock = 2xMinimum reorder Level
+		 * 
+		 * @ then we remove the order from the list- avoiding duplication
 		 */
 		Order order = new Order(this);
+		OrderList orderList = OrderList.instance();
+		orderList.insertOrder(order);
 		producStock = order.getOrderQuantity();
-		// OrderList orderList = OrderList.instance();
-		// orderList.add()
+		orderList.removeOrder(order.getId());
 
 	}
 
