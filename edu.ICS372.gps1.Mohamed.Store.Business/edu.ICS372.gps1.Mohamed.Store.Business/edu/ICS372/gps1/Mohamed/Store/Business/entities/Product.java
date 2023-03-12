@@ -8,38 +8,42 @@ import java.util.Objects;
  * */
 
 import edu.ICS372.gps1.Mohamed.Store.Business.Exceptions.ProductCustomExceptions;
+import edu.ICS372.gps1.Mohamed.Store.Business.collections.OrderList;
 
-public class Product implements Serializable {
+public class Product extends Entity implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int productId;
-	private String productName;
+
 	private double price;
 	private int minimumReorderLevel;
+	private int producStock;
 
 	public Product(int productId, String productName, double price, int minimumReorderLevel)
 			throws ProductCustomExceptions {
-		super();
+		super(productName, productId);
 		/*
 		 * Product id cannot be zero or less than zero
 		 */
-		if (productId <= 0) {
-			throw new ProductCustomExceptions("Product ID cannot be zero");
-		}
-		this.productId = productId;
-		this.productName = productName;
+
 		this.price = price;
 		this.minimumReorderLevel = minimumReorderLevel;
-	}
+		/*
+		 * the system will automatically reorder the new product
+		 * 
+		 * @ add the new order into the list order
+		 * 
+		 * @and set its product stock = 2xMinimum reorder Level
+		 * 
+		 * @ then we remove the order from the list- avoiding duplication
+		 */
+		Order order = new Order(this);
+		OrderList orderList = OrderList.instance();
+		orderList.insertOrder(order);
+		producStock = order.getOrderQuantity();
+		orderList.removeOrder(order.getId());
 
-	public int getProductId() {
-		return productId;
-	}
-
-	public String getProductName() {
-		return productName;
 	}
 
 	public double getPrice() {
@@ -54,6 +58,13 @@ public class Product implements Serializable {
 		return minimumReorderLevel;
 	}
 
+	public int getProducStock() {
+		return producStock;
+	}
+
+	public void setProducStock(int producStock) {
+		this.producStock = producStock;
+	}
 //	@Override
 //	/* this method is helpful for searching a product */
 //	public boolean matches(int productId) {
@@ -62,13 +73,13 @@ public class Product implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Product [productId=" + productId + ", productName=" + productName + ", price=" + price
-				+ ", minimumReorderLevel=" + minimumReorderLevel + "]";
+		return "Product [productId=" + super.getId() + ", productName=" + super.getName() + ", price=" + price
+				+ ", productStock=" + producStock + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(minimumReorderLevel, price, productId, productName);
+		return Objects.hash(producStock, minimumReorderLevel, price);
 	}
 
 	@Override
@@ -85,7 +96,7 @@ public class Product implements Serializable {
 		Product other = (Product) obj;
 		return minimumReorderLevel == other.minimumReorderLevel
 				&& Double.doubleToLongBits(price) == Double.doubleToLongBits(other.price)
-				&& productId == other.productId && Objects.equals(productName, other.productName);
+				&& super.getId() == other.getId() && Objects.equals(super.getName(), other.getName());
 	}
 
 } // end of the class

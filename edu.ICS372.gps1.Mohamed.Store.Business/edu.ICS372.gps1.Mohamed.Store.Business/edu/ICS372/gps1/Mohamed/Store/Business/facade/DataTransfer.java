@@ -1,15 +1,21 @@
 package edu.ICS372.gps1.Mohamed.Store.Business.facade;
 
+import edu.ICS372.gps1.Mohamed.Store.Business.entities.Order;
 import edu.ICS372.gps1.Mohamed.Store.Business.entities.Product;
 
 public abstract class DataTransfer<T> {
-	private int productId;
-	private double newPrice;
-
+	/*
+	 * i just change productId and ProductName into id and name respectively.
+	 * 
+	 * @ id and name is common for both product and Order classes
+	 */
+	private int id;
 	private int productAmountInCart;
-	private String productName;
+	private String name;
 	private double productPrice;
 	private int productMinimumReorderLevel;
+	private int productStock;
+	private int orderQuantity;
 	private int memberId;
 	private String memberName;
 	private String memberAddress;
@@ -90,20 +96,20 @@ public abstract class DataTransfer<T> {
 
 	///// Product field setters getters /////
 
-	public int getProductId() {
-		return productId;
+	public int getId() {
+		return id;
 	}
 
-	public void setProductId(int productId) {
-		this.productId = productId;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public String getProductName() {
-		return productName;
+	public String getName() {
+		return name;
 	}
 
-	public void setProductName(String productName) {
-		this.productName = productName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public void setProductPrice(double productPrice) {
@@ -113,6 +119,14 @@ public abstract class DataTransfer<T> {
 	public double getProductPrice() {
 
 		return productPrice;
+	}
+
+	public int getProductStock() {
+		return productStock;
+	}
+
+	public void setProductStock(int productStock) {
+		this.productStock = productStock;
 	}
 
 //	public double getMemberFee() {
@@ -151,21 +165,18 @@ public abstract class DataTransfer<T> {
 	 * @modified by Abshir
 	 */
 	public void setProductFields(Product product) {
-		this.productId = product.getProductId();
-		this.productName = product.getProductName();
+		this.id = product.getId();
+		this.name = product.getName();
 		this.productPrice = product.getPrice();
 		this.productMinimumReorderLevel = product.getMinimumReorderLevel();
+		this.productStock = product.getProducStock();
 	}
 
-// just playing
-//	public void setProductPrice(Request product) {
-//		this.newPrice = product.getProductPrice();
-//
-//	}
-//
-//	public double getNewPrice() {
-//		return newPrice;
-//	}
+	public void setOrderFields(Order order) {
+		this.name = order.getName();
+		this.id = order.getId();
+		this.orderQuantity = order.getOrderQuantity();
+	}
 
 	/**
 	 * @return the shoppingCart
@@ -173,6 +184,14 @@ public abstract class DataTransfer<T> {
 //	public List<SellableProduct> getShoppingCart() {
 //		return shoppingCart;
 //	}
+
+	public int getOrderQuantity() {
+		return orderQuantity;
+	}
+
+	public void setOrderQuantity(int orderQuantity) {
+		this.orderQuantity = orderQuantity;
+	}
 
 	/**
 	 * @param shoppingCart the shoppingCart to set
@@ -194,10 +213,11 @@ public abstract class DataTransfer<T> {
 	 */
 	public void reset() {
 
-		productId = 0;
-		productName = "Null";
+		id = 0;
+		name = "Null";
 		productMinimumReorderLevel = 0;
 		productPrice = 0;
+		productStock = 0;
 		memberId = 0;
 		memberName = "Null";
 		memberPhone = "Null";
