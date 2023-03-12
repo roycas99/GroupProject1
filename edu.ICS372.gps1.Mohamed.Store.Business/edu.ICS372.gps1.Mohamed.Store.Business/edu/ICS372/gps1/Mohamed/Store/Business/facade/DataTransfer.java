@@ -4,9 +4,14 @@ import edu.ICS372.gps1.Mohamed.Store.Business.entities.Order;
 import edu.ICS372.gps1.Mohamed.Store.Business.entities.Product;
 
 public abstract class DataTransfer<T> {
-	private int productId;
+	/*
+	 * i just change productId and ProductName into id and name respectively.
+	 * 
+	 * @ id and name is common for both product and Order classes
+	 */
+	private int id;
 	private int productAmountInCart;
-	private String productName;
+	private String name;
 	private double productPrice;
 	private int productMinimumReorderLevel;
 	private int productStock;
@@ -91,20 +96,20 @@ public abstract class DataTransfer<T> {
 
 	///// Product field setters getters /////
 
-	public int getProductId() {
-		return productId;
+	public int getId() {
+		return id;
 	}
 
-	public void setProductId(int productId) {
-		this.productId = productId;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public String getProductName() {
-		return productName;
+	public String getName() {
+		return name;
 	}
 
-	public void setProductName(String productName) {
-		this.productName = productName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public void setProductPrice(double productPrice) {
@@ -160,16 +165,16 @@ public abstract class DataTransfer<T> {
 	 * @modified by Abshir
 	 */
 	public void setProductFields(Product product) {
-		this.productId = product.getId();
-		this.productName = product.getName();
+		this.id = product.getId();
+		this.name = product.getName();
 		this.productPrice = product.getPrice();
 		this.productMinimumReorderLevel = product.getMinimumReorderLevel();
 		this.productStock = product.getProducStock();
 	}
 
 	public void setOrderFields(Order order) {
-		this.productName = order.getName();
-		this.productId = order.getId();
+		this.name = order.getName();
+		this.id = order.getId();
 		this.orderQuantity = order.getOrderQuantity();
 	}
 
@@ -208,8 +213,8 @@ public abstract class DataTransfer<T> {
 	 */
 	public void reset() {
 
-		productId = 0;
-		productName = "Null";
+		id = 0;
+		name = "Null";
 		productMinimumReorderLevel = 0;
 		productPrice = 0;
 		productStock = 0;
