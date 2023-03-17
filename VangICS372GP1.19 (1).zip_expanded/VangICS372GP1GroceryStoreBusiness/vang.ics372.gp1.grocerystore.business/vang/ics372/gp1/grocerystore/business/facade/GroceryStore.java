@@ -278,16 +278,16 @@ public class GroceryStore implements Serializable {
 	 * 
 	 * @author Abshir
 	 */
-	public Result changeProductPrice(Request request, Result result) {
+	public Result changeProductPrice(Request request) {
 		Result resultLocal = new Result();
 		// get the product from the list
-		Product newProduct = productList.searchProduct(result.getProductId());
+		Product newProduct = productList.searchProduct(request.getProductId());
 		// update the price of the product
 		newProduct.setPrice(request.getProductPrice());
-		resultLocal = result;
+
 		resultLocal.setProductPrice(request.getProductPrice());
 
-		return result;
+		return resultLocal;
 
 	}// end of changeProductPrice class
 
@@ -523,15 +523,15 @@ public class GroceryStore implements Serializable {
 			if (yesOrNo("Test addProduct?")) {
 				autoTester.testAddProduct(request);
 			}
-//			if (yesOrNo("Test changeProductPrice()?")) {
-//				autoTester.testChangeProductPrice(request);
-//			}
-//			if (yesOrNo("Test checkOut()?")) {
-//				autoTester.testCheckOut(request);
-//			}
-//			if (yesOrNo("Test processShipment()?")) {
-//				autoTester.testProcessShipment(request);
-//			}
+			if (yesOrNo("Test changeProductPrice()?")) {
+				autoTester.testChangeProductPrice(request);
+			}
+			if (yesOrNo("Test checkOut()?")) {
+				autoTester.testCheckOut(request);
+			}
+			if (yesOrNo("Test processShipment()?")) {
+				autoTester.testProcessShipment(request);
+			}
 		} else {
 			autoTester.main(null);
 		}

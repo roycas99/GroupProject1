@@ -106,70 +106,68 @@ public class AutomatedTester {
 	}
 
 	// 5
-//	public void testCheckOut(Request request) {
-//		System.out.println("\nTesting GroceryStore.instance().checkOut()");
-//		Result result = new Result();
-//		if (request.isAutoTester()) {
-//			request.setId(MEMBER + 1);
-//			System.out.println("Adding to shopping cart()");
-//			for (int count = 0; count < 5; count++) {
-//				request.setId(productIds[count]);
-//				request.setName(products[count]);
-//				// System.out.println("prices[" + count + "]" + "=" + prices[count]);
-//				request.setSellableProductPrice(prices[count]);
-//				request.setRequestedAmount(2);
-//				result = store.addToShoppingCart(request);
-//				// System.out.println("Result.getRequestedAm = " + result.getRequestedAmount());
-//				assert result.getResultCode() == Result.PRODUCT_ADDED : "PRODUCT_NOT_ADDED";
-//			}
-//		} else {
-//			request.setId(MEMBER + 1);
-//			result = store.retreiveProduct(request);
-//			request.setId(result.getId());
-//			request.setName(result.getName());
-//			// System.out.println("A.T. line 123 : request.getSellProName = " +
-//			// request.getSellableProductName());
-//			request.setSellableProductPrice(result.getProductPrice());
-//			request.setRequestedAmount(request.getRequestedAmount());
-//			result = store.addToShoppingCart(request);
-//			// System.out.println("Result.getRequestedAm = " + result.getRequestedAmount());
-//			assert result.getResultCode() == Result.PRODUCT_ADDED : "PRODUCT_NOT_ADDED";
-//		}
-//		System.out.println("**addShoppinCart() : Passed");
-//		System.out.println("Checking out");
-//		result = store.checkOut(request);
-//		System.out.println("ResultCode = " + result.getResultCode());
-//		assert result.getResultCode() == Result.SHOPPING_CART_PAID : "SHOPPING_PENDING";
-//		System.out.println("*****checkOut() : Passed");
-//	}
+	public void testCheckOut(Request request) {
+		System.out.println("\nTesting GroceryStore.instance().checkOut()");
+		Result result = new Result();
+		if (request.isAutoTester()) {
+			request.setMemberId(MEMBER + 1);
+			System.out.println("Adding to shopping cart()");
+			for (int count = 0; count < 5; count++) {
+				request.setProductId(productIds[count]);
+				request.setProductName(products[count]);
+				System.out.println("prices[" + count + "]" + "=" + prices[count]);
+				request.setSellableProductPrice(prices[count]);
+				request.setRequestedAmount(2);
+				result = store.addToShoppingCart(request);
+				// System.out.println("Result.getRequestedAm = " + result.getRequestedAmount());
+				assert result.getResultCode() == Result.PRODUCT_ADDED : "PRODUCT_NOT_ADDED";
+			}
+		} else {
+			request.setMemberId(MEMBER + 1);
+			result = store.retreiveProduct(request);
+			request.setProductId(result.getProductId());
+			request.setProductName(result.getProductName());
+			System.out.println("A.T. line 123 : request.getSellProName = " + request.getSellableProductName());
+			request.setSellableProductPrice(result.getProductPrice());
+			request.setRequestedAmount(request.getRequestedAmount());
+			result = store.addToShoppingCart(request);
+			// System.out.println("Result.getRequestedAm = " + result.getRequestedAmount());
+			assert result.getResultCode() == Result.PRODUCT_ADDED : "PRODUCT_NOT_ADDED";
+		}
+		System.out.println("**addShoppinCart() : Passed");
+		System.out.println("Checking out");
+		result = store.checkOut(request);
+		System.out.println("ResultCode = " + result.getResultCode());
+		assert result.getResultCode() == Result.SHOPPING_CART_PAID : "SHOPPING_PENDING";
+		System.out.println("*****checkOut() : Passed");
+	}
 
 	// 7
-//	public void testProcessShipment(Request request) {
-//		System.out.println("\nTesting GroceryStore.instance().processShipment()");
-//		Result result = new Result();
-//		result = store.processShipment(request);
-//		assert result.getResultCode() == Result.SHIPMENT_PROCESSED : "SHIPPEMT_NOT_PROCESS";
-//		System.out.println("*****processShipment() : Passed");
-//	}
+	public void testProcessShipment(Request request) {
+		System.out.println("\nTesting GroceryStore.instance().processShipment()");
+		Result result = new Result();
+		result = store.processShipment(request);
+		assert result.getResultCode() == Result.SHIPMENT_PROCESSED : "SHIPPEMT_NOT_PROCESS";
+		System.out.println("*****processShipment() : Passed");
+	}
 
 	// 8
-//	public void testChangeProductPrice(Request request) {
-//		System.out.println("\nTesting GroceryStore.instance().changeProductPrice()");
-//		if(request.isAutoTester()) {
-//			//System.out.println("A.T line 152 isAutoTester is " + request.isAutoTester());
-//			request.setId(PRODUCTID);
-//			request.setProductPrice(PRODUCTPRICE);
-//		}
-//		else {
-//			request.setProductPrice(request.getProductNewPrice());
-//		}
-//		//System.out.println("line 159: request.getProId = " + request.getId());
-//		//System.out.println("line 160: request.getProPrice = " + request.getProductPrice());
-//		//System.out.println("line 161: request.getProNewPrice = " + request.getProductNewPrice());
-//		Result result = store.changeProductPrice(request,result);
-//		assert result.getResultCode() == Result.PRICE_CHANGED : "PRICE_NOT_CHANGED";
-//		System.out.println("*****changeProductPrice() : Passed");
-//	}
+	public void testChangeProductPrice(Request request) {
+		System.out.println("\nTesting GroceryStore.instance().changeProductPrice()");
+		if (request.isAutoTester()) {
+			System.out.println("A.T line 152 isAutoTester is " + request.isAutoTester());
+			request.setProductId(PRODUCTID);
+			request.setProductPrice(PRODUCTPRICE);
+		} else {
+			request.setProductPrice(request.getProductNewPrice());
+		}
+		System.out.println("line 159: request.getProId = " + request.getProductId());
+		System.out.println("line 160: request.getProPrice = " + request.getProductPrice());
+		System.out.println("line 161: request.getProNewPrice = " + request.getProductNewPrice());
+		Result newResult = store.changeProductPrice(request);
+		assert newResult.getResultCode() == Result.PRICE_CHANGED : "PRICE_NOT_CHANGED";
+		System.out.println("*****changeProductPrice() : Passed");
+	}
 
 	public void testAll(Request request) {
 		System.out.println("\nCreating member and product array...");

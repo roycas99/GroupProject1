@@ -477,9 +477,9 @@ public class UserInterface {
 
 		Result newResult = new Result();
 
-		newResult = groceryStore.changeProductPrice(Request.instance(), result);
-		System.out
-				.println("The new price for the " + newResult.getProductName() + " is: " + newResult.getProductPrice());
+		newResult = groceryStore.changeProductPrice(Request.instance());
+		System.out.println(
+				"The new price for the " + Request.instance().getProductName() + " is: " + newResult.getProductPrice());
 
 	}// end of ChangePrice
 
@@ -739,6 +739,7 @@ public class UserInterface {
 				request.setProductMinimumReorderLevel(getNumber("Enter minimum order"));
 				request.setProductInStock(getNumber("Enter amount to stock"));
 				request.setProductNewPrice(getPrice("Enter new price"));
+				request.setOrderId(getNumber("Enter order Id"));
 				request.setRequestedAmount(getNumber("Enter requested amount les than stock amount"));
 				groceryStore.runAutomatedTester(request);
 			} while (yesOrNo("would you like to run manual testing again?"));
